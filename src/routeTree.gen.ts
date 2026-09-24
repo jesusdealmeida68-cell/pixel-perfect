@@ -10,18 +10,26 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AssistenteRouteImport } from './routes/assistente'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ClientesRouteImport } from './routes/clientes'
 import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as EmpresaRouteImport } from './routes/empresa'
 import { Route as FinancasRouteImport } from './routes/financas'
+import { Route as TabelasRouteImport } from './routes/tabelas'
 import { Route as TrabalhosRouteImport } from './routes/trabalhos'
 import { Route as DocumentosIdRouteImport } from './routes/documentos.$id'
+import { Route as TabelasIdRouteImport } from './routes/tabelas.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistenteRoute = AssistenteRouteImport.update({
+  id: '/assistente',
+  path: '/assistente',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -54,6 +62,11 @@ const FinancasRoute = FinancasRouteImport.update({
   path: '/financas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TabelasRoute = TabelasRouteImport.update({
+  id: '/tabelas',
+  path: '/tabelas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrabalhosRoute = TrabalhosRouteImport.update({
   id: '/trabalhos',
   path: '/trabalhos',
@@ -64,85 +77,110 @@ const DocumentosIdRoute = DocumentosIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => DocumentosRoute,
 } as any)
+const TabelasIdRoute = TabelasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TabelasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistente': typeof AssistenteRoute
   '/auth': typeof AuthRoute
   '/clientes': typeof ClientesRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/documentos': typeof DocumentosRouteWithChildren
   '/empresa': typeof EmpresaRoute
   '/financas': typeof FinancasRoute
+  '/tabelas': typeof TabelasRouteWithChildren
   '/trabalhos': typeof TrabalhosRoute
   '/documentos/$id': typeof DocumentosIdRoute
+  '/tabelas/$id': typeof TabelasIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistente': typeof AssistenteRoute
   '/auth': typeof AuthRoute
   '/clientes': typeof ClientesRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/documentos': typeof DocumentosRouteWithChildren
   '/empresa': typeof EmpresaRoute
   '/financas': typeof FinancasRoute
+  '/tabelas': typeof TabelasRouteWithChildren
   '/trabalhos': typeof TrabalhosRoute
   '/documentos/$id': typeof DocumentosIdRoute
+  '/tabelas/$id': typeof TabelasIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assistente': typeof AssistenteRoute
   '/auth': typeof AuthRoute
   '/clientes': typeof ClientesRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/documentos': typeof DocumentosRouteWithChildren
   '/empresa': typeof EmpresaRoute
   '/financas': typeof FinancasRoute
+  '/tabelas': typeof TabelasRouteWithChildren
   '/trabalhos': typeof TrabalhosRoute
   '/documentos/$id': typeof DocumentosIdRoute
+  '/tabelas/$id': typeof TabelasIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assistente'
     | '/auth'
     | '/clientes'
     | '/diagnostico'
     | '/documentos'
     | '/empresa'
     | '/financas'
+    | '/tabelas'
     | '/trabalhos'
     | '/documentos/$id'
+    | '/tabelas/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assistente'
     | '/auth'
     | '/clientes'
     | '/diagnostico'
     | '/documentos'
     | '/empresa'
     | '/financas'
+    | '/tabelas'
     | '/trabalhos'
     | '/documentos/$id'
+    | '/tabelas/$id'
   id:
     | '__root__'
     | '/'
+    | '/assistente'
     | '/auth'
     | '/clientes'
     | '/diagnostico'
     | '/documentos'
     | '/empresa'
     | '/financas'
+    | '/tabelas'
     | '/trabalhos'
     | '/documentos/$id'
+    | '/tabelas/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssistenteRoute: typeof AssistenteRoute
   AuthRoute: typeof AuthRoute
   ClientesRoute: typeof ClientesRoute
   DiagnosticoRoute: typeof DiagnosticoRoute
   DocumentosRoute: typeof DocumentosRouteWithChildren
   EmpresaRoute: typeof EmpresaRoute
   FinancasRoute: typeof FinancasRoute
+  TabelasRoute: typeof TabelasRouteWithChildren
   TrabalhosRoute: typeof TrabalhosRoute
 }
 
@@ -153,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistente': {
+      id: '/assistente'
+      path: '/assistente'
+      fullPath: '/assistente'
+      preLoaderRoute: typeof AssistenteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -197,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FinancasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tabelas': {
+      id: '/tabelas'
+      path: '/tabelas'
+      fullPath: '/tabelas'
+      preLoaderRoute: typeof TabelasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trabalhos': {
       id: '/trabalhos'
       path: '/trabalhos'
@@ -210,6 +262,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/documentos/$id'
       preLoaderRoute: typeof DocumentosIdRouteImport
       parentRoute: typeof DocumentosRoute
+    }
+    '/tabelas/$id': {
+      id: '/tabelas/$id'
+      path: '/$id'
+      fullPath: '/tabelas/$id'
+      preLoaderRoute: typeof TabelasIdRouteImport
+      parentRoute: typeof TabelasRoute
     }
   }
 }
@@ -226,14 +285,27 @@ const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
   DocumentosRouteChildren,
 )
 
+interface TabelasRouteChildren {
+  TabelasIdRoute: typeof TabelasIdRoute
+}
+
+const TabelasRouteChildren: TabelasRouteChildren = {
+  TabelasIdRoute: TabelasIdRoute,
+}
+
+const TabelasRouteWithChildren =
+  TabelasRoute._addFileChildren(TabelasRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssistenteRoute: AssistenteRoute,
   AuthRoute: AuthRoute,
   ClientesRoute: ClientesRoute,
   DiagnosticoRoute: DiagnosticoRoute,
   DocumentosRoute: DocumentosRouteWithChildren,
   EmpresaRoute: EmpresaRoute,
   FinancasRoute: FinancasRoute,
+  TabelasRoute: TabelasRouteWithChildren,
   TrabalhosRoute: TrabalhosRoute,
 }
 export const routeTree = rootRouteImport

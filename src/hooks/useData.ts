@@ -373,3 +373,104 @@ export function useUpsertCompany() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["company"] }),
   });
 }
+
+export type TableColumn = { id: string; name: string; type: "texto" | "numero" | "moeda" | "data" };
+export type TableRow = Record<string, string | number>;
+export type CustomTable = {
+  id: string;
+  title: string;
+  columns: TableColumn[];
+  rows: TableRow[];
+  created_at: string;
+  updated_at: string;
+};
+
+export function useTables() {
+  const { uid } = useUid();
+  return useQuery({
+    queryKey: ["tables", uid],
+    enabled: !!uid,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("custom_tables")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data as unknown as CustomTable[];
+    },
+  });
+}
+
+export function useTable(id: string) {
+  const { uid } = useUid();
+  return useQuery({
+    queryKey: ["table", id, uid],
+    enabled: !!uid && !!id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("custom_tables")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as unknown as CustomTable | null;
+    },
+  });
+}
+
+export function useCreateTable() {
+  const { uid } = useUid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { title: string; columns: TableColumn[]; rows: TableRow[] }) => {
+      if (!uid) throw new Error("Sessão expirada");
+      const { data, error } = await supabase
+        .from("custom_tables")
+        .insert({ user_id: uid, ...input })
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as CustomTable;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tables"] }),
+  });
+}
+
+export function useUpdateTable() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      ...patch
+    }: {
+      id: string;
+      title?: string;
+      columns?: TableColumn[];
+      rows?: TableRow[];
+    }) => {
+      const { data, error } = await supabase
+        .from("custom_tables")
+        .update(patch)
+        .eq("id", id)
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as CustomTable;
+    },
+    onSuccess: (_d, vars) => {
+      qc.invalidateQueries({ queryKey: ["tables"] });
+      qc.invalidateQueries({ queryKey: ["table", vars.id] });
+    },
+  });
+}
+
+export function useDeleteTable() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("custom_tables").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tables"] }),
+  });
+}

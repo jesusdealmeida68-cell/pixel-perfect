@@ -60,7 +60,9 @@ function Dashboard() {
     <AppShell>
       <PageHeader
         eyebrow={`Painel · ${today}`}
-        title={company?.owner_name ? `Bom dia, ${company.owner_name.split(" ")[0]}` : "Painel geral"}
+        title={
+          company?.owner_name ? `Bom dia, ${company.owner_name.split(" ")[0]}` : "Painel geral"
+        }
         action={
           <Link
             to="/clientes"
@@ -85,6 +87,18 @@ function Dashboard() {
           className="flex items-center gap-2 bg-card ring-1 ring-black/5 rounded-lg p-3.5 text-sm font-medium"
         >
           <span className="font-mono text-gold">＋</span> Guardar cliente
+        </Link>
+        <Link
+          to="/tabelas"
+          className="flex items-center gap-2 bg-card ring-1 ring-black/5 rounded-lg p-3.5 text-sm font-medium"
+        >
+          <span className="font-mono text-gold">＋</span> Criar tabela
+        </Link>
+        <Link
+          to="/assistente"
+          className="flex items-center gap-2 bg-card ring-1 ring-black/5 rounded-lg p-3.5 text-sm font-medium"
+        >
+          <span className="text-gold">✦</span> Assistente
         </Link>
       </section>
 
