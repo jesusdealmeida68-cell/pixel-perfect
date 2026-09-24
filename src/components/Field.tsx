@@ -36,7 +36,7 @@ export function PrimaryButton(props: React.ButtonHTMLAttributes<HTMLButtonElemen
   return (
     <button
       {...props}
-      className={`inline-flex items-center justify-center gap-1.5 rounded-md bg-ink text-ivory py-2 px-3 text-sm font-medium ring-1 ring-black/5 transition-transform active:scale-[0.98] disabled:opacity-60 ${props.className ?? ""}`}
+      className={`inline-flex items-center justify-center gap-1.5 rounded-md bg-gradient-to-b from-ink-2 to-ink text-ivory py-2 px-3 text-sm font-medium ring-1 ring-black/5 shadow-sm transition-transform active:scale-[0.98] disabled:opacity-60 ${props.className ?? ""}`}
     />
   );
 }

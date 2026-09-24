@@ -184,10 +184,7 @@ export function useCompany() {
     queryKey: ["company", uid],
     enabled: !!uid,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("company_settings")
-        .select("*")
-        .maybeSingle();
+      const { data, error } = await supabase.from("company_settings").select("*").maybeSingle();
       if (error) throw error;
       return (data ?? null) as unknown as Company | null;
     },
@@ -256,4 +253,123 @@ export function useCreateDocument() {
 
 export function useUid_() {
   return useUid();
+}
+
+export function useCreateClient() {
+  const { uid } = useUid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: Partial<Client> & { full_name: string }) => {
+      if (!uid) throw new Error("Sessão expirada");
+      const { data, error } = await supabase
+        .from("clients")
+        .insert({ user_id: uid, ...input })
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as Client;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["clients"] }),
+  });
+}
+
+export function useUpdateClient() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, ...patch }: Partial<Client> & { id: string }) => {
+      const { data, error } = await supabase
+        .from("clients")
+        .update(patch)
+        .eq("id", id)
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as Client;
+    },
+    onSuccess: (_d, vars) => {
+      qc.invalidateQueries({ queryKey: ["clients"] });
+      qc.invalidateQueries({ queryKey: ["client", vars.id] });
+    },
+  });
+}
+
+export function useDeleteClient() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("clients").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["clients"] }),
+  });
+}
+
+export function useCreateJob() {
+  const { uid } = useUid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: Partial<Job> & { title: string }) => {
+      if (!uid) throw new Error("Sessão expirada");
+      const { data, error } = await supabase
+        .from("jobs")
+        .insert({ user_id: uid, ...input })
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as Job;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["jobs"] });
+      qc.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
+}
+
+export function useUpdateJob() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, ...patch }: Partial<Job> & { id: string }) => {
+      const { data, error } = await supabase
+        .from("jobs")
+        .update(patch)
+        .eq("id", id)
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as Job;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["jobs"] });
+      qc.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
+}
+
+export function useDeleteJob() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("jobs").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["jobs"] }),
+  });
+}
+
+export function useUpsertCompany() {
+  const { uid } = useUid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: Partial<Company>) => {
+      if (!uid) throw new Error("Sessão expirada");
+      const { data, error } = await supabase
+        .from("company_settings")
+        .upsert({ user_id: uid, ...input }, { onConflict: "user_id" })
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as Company;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["company"] }),
+  });
 }

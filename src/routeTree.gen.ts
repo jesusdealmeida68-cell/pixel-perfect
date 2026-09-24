@@ -11,6 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ClientesRouteImport } from './routes/clientes'
+import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
+import { Route as DocumentosRouteImport } from './routes/documentos'
+import { Route as EmpresaRouteImport } from './routes/empresa'
+import { Route as FinancasRouteImport } from './routes/financas'
+import { Route as TrabalhosRouteImport } from './routes/trabalhos'
+import { Route as DocumentosIdRouteImport } from './routes/documentos.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +29,121 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientesRoute = ClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiagnosticoRoute = DiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentosRoute = DocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresaRoute = EmpresaRouteImport.update({
+  id: '/empresa',
+  path: '/empresa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinancasRoute = FinancasRouteImport.update({
+  id: '/financas',
+  path: '/financas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrabalhosRoute = TrabalhosRouteImport.update({
+  id: '/trabalhos',
+  path: '/trabalhos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentosIdRoute = DocumentosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => DocumentosRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/clientes': typeof ClientesRoute
+  '/diagnostico': typeof DiagnosticoRoute
+  '/documentos': typeof DocumentosRouteWithChildren
+  '/empresa': typeof EmpresaRoute
+  '/financas': typeof FinancasRoute
+  '/trabalhos': typeof TrabalhosRoute
+  '/documentos/$id': typeof DocumentosIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/clientes': typeof ClientesRoute
+  '/diagnostico': typeof DiagnosticoRoute
+  '/documentos': typeof DocumentosRouteWithChildren
+  '/empresa': typeof EmpresaRoute
+  '/financas': typeof FinancasRoute
+  '/trabalhos': typeof TrabalhosRoute
+  '/documentos/$id': typeof DocumentosIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/clientes': typeof ClientesRoute
+  '/diagnostico': typeof DiagnosticoRoute
+  '/documentos': typeof DocumentosRouteWithChildren
+  '/empresa': typeof EmpresaRoute
+  '/financas': typeof FinancasRoute
+  '/trabalhos': typeof TrabalhosRoute
+  '/documentos/$id': typeof DocumentosIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/clientes'
+    | '/diagnostico'
+    | '/documentos'
+    | '/empresa'
+    | '/financas'
+    | '/trabalhos'
+    | '/documentos/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth'
-  id: '__root__' | '/' | '/auth'
+  to:
+    | '/'
+    | '/auth'
+    | '/clientes'
+    | '/diagnostico'
+    | '/documentos'
+    | '/empresa'
+    | '/financas'
+    | '/trabalhos'
+    | '/documentos/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/clientes'
+    | '/diagnostico'
+    | '/documentos'
+    | '/empresa'
+    | '/financas'
+    | '/trabalhos'
+    | '/documentos/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  ClientesRoute: typeof ClientesRoute
+  DiagnosticoRoute: typeof DiagnosticoRoute
+  DocumentosRoute: typeof DocumentosRouteWithChildren
+  EmpresaRoute: typeof EmpresaRoute
+  FinancasRoute: typeof FinancasRoute
+  TrabalhosRoute: typeof TrabalhosRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +162,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/clientes': {
+      id: '/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof ClientesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diagnostico': {
+      id: '/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/diagnostico'
+      preLoaderRoute: typeof DiagnosticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documentos': {
+      id: '/documentos'
+      path: '/documentos'
+      fullPath: '/documentos'
+      preLoaderRoute: typeof DocumentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresa': {
+      id: '/empresa'
+      path: '/empresa'
+      fullPath: '/empresa'
+      preLoaderRoute: typeof EmpresaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/financas': {
+      id: '/financas'
+      path: '/financas'
+      fullPath: '/financas'
+      preLoaderRoute: typeof FinancasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trabalhos': {
+      id: '/trabalhos'
+      path: '/trabalhos'
+      fullPath: '/trabalhos'
+      preLoaderRoute: typeof TrabalhosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documentos/$id': {
+      id: '/documentos/$id'
+      path: '/$id'
+      fullPath: '/documentos/$id'
+      preLoaderRoute: typeof DocumentosIdRouteImport
+      parentRoute: typeof DocumentosRoute
+    }
   }
 }
+
+interface DocumentosRouteChildren {
+  DocumentosIdRoute: typeof DocumentosIdRoute
+}
+
+const DocumentosRouteChildren: DocumentosRouteChildren = {
+  DocumentosIdRoute: DocumentosIdRoute,
+}
+
+const DocumentosRouteWithChildren = DocumentosRoute._addFileChildren(
+  DocumentosRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  ClientesRoute: ClientesRoute,
+  DiagnosticoRoute: DiagnosticoRoute,
+  DocumentosRoute: DocumentosRouteWithChildren,
+  EmpresaRoute: EmpresaRoute,
+  FinancasRoute: FinancasRoute,
+  TrabalhosRoute: TrabalhosRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
