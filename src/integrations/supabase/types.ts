@@ -14,7 +14,313 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activities: {
+        Row: {
+          amount: number | null
+          client_id: string | null
+          created_at: string
+          id: string
+          kind: string
+          message: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number | null
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          message: string
+          user_id: string
+        }
+        Update: {
+          amount?: number | null
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          message?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activities_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          address: string | null
+          company_name: string | null
+          created_at: string
+          email: string | null
+          first_contact_date: string | null
+          full_name: string
+          id: string
+          notes: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+          user_id: string
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          company_name?: string | null
+          created_at?: string
+          email?: string | null
+          first_contact_date?: string | null
+          full_name: string
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          company_name?: string | null
+          created_at?: string
+          email?: string | null
+          first_contact_date?: string | null
+          full_name?: string
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      company_settings: {
+        Row: {
+          address: string | null
+          created_at: string
+          currency: string
+          default_terms: string | null
+          email: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          owner_name: string | null
+          phone: string | null
+          socials: string | null
+          updated_at: string
+          user_id: string
+          website: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          currency?: string
+          default_terms?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          owner_name?: string | null
+          phone?: string | null
+          socials?: string | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          currency?: string
+          default_terms?: string | null
+          email?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          owner_name?: string | null
+          phone?: string | null
+          socials?: string | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      document_counters: {
+        Row: {
+          last_number: number
+          user_id: string
+          year: number
+        }
+        Insert: {
+          last_number?: number
+          user_id: string
+          year: number
+        }
+        Update: {
+          last_number?: number
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
+      }
+      documents: {
+        Row: {
+          base_price: number
+          client_id: string | null
+          conditions: string | null
+          created_at: string
+          deadline: string | null
+          description: string | null
+          diagnosis: string | null
+          discount: number
+          fees: number
+          id: string
+          issue_date: string
+          items: Json
+          job_id: string | null
+          kind: string
+          notes: string | null
+          number: string | null
+          other_costs: number
+          payment_method: string | null
+          service: string | null
+          title: string | null
+          total: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          base_price?: number
+          client_id?: string | null
+          conditions?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          diagnosis?: string | null
+          discount?: number
+          fees?: number
+          id?: string
+          issue_date?: string
+          items?: Json
+          job_id?: string | null
+          kind?: string
+          notes?: string | null
+          number?: string | null
+          other_costs?: number
+          payment_method?: string | null
+          service?: string | null
+          title?: string | null
+          total?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          base_price?: number
+          client_id?: string | null
+          conditions?: string | null
+          created_at?: string
+          deadline?: string | null
+          description?: string | null
+          diagnosis?: string | null
+          discount?: number
+          fees?: number
+          id?: string
+          issue_date?: string
+          items?: Json
+          job_id?: string | null
+          kind?: string
+          notes?: string | null
+          number?: string | null
+          other_costs?: number
+          payment_method?: string | null
+          service?: string | null
+          title?: string | null
+          total?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      jobs: {
+        Row: {
+          amount: number
+          client_id: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          paid_amount: number
+          service: string | null
+          start_date: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          client_id?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          paid_amount?: number
+          service?: string | null
+          start_date?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          client_id?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          paid_amount?: number
+          service?: string | null
+          start_date?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
