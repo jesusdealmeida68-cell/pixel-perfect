@@ -9,10 +9,10 @@ import { Brand } from "@/components/AppShell";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Entrar — Bellucci d'Oro" },
-      { name: "description", content: "Aceda à sua conta Bellucci d'Oro." },
-      { property: "og:title", content: "Entrar — Bellucci d'Oro" },
-      { property: "og:description", content: "Aceda à sua conta Bellucci d'Oro." },
+      { title: "Entrar — Gestão Fácil" },
+      { name: "description", content: "Aceda à sua conta Gestão Fácil." },
+      { property: "og:title", content: "Entrar — Gestão Fácil" },
+      { property: "og:description", content: "Aceda à sua conta Gestão Fácil." },
     ],
   }),
   component: AuthPage,

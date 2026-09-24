@@ -76,11 +76,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Bellucci d'Oro — Gestão de clientes e documentos" },
+      { title: "Gestão Fácil — O seu negócio, mais simples" },
       {
         name: "description",
         content:
-          "Plataforma de gestão de clientes, trabalhos, orçamentos e contratos da Bellucci d'Oro.",
+          "Gestão Fácil: plataforma de gestão de clientes, trabalhos, orçamentos e contratos para empreendedores.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -94,6 +94,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/logo.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/logo-192.png" },
     ],
   }),
   shellComponent: RootShell,

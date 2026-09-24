@@ -6,15 +6,15 @@ import { formatDateTime, formatMoney } from "@/lib/bdo";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Painel — Bellucci d'Oro" },
+      { title: "Painel — Gestão Fácil" },
       {
         name: "description",
-        content: "Visão geral de clientes, trabalhos e valores da Bellucci d'Oro.",
+        content: "Visão geral de clientes, trabalhos e valores no Gestão Fácil.",
       },
-      { property: "og:title", content: "Painel — Bellucci d'Oro" },
+      { property: "og:title", content: "Painel — Gestão Fácil" },
       {
         property: "og:description",
-        content: "Visão geral de clientes, trabalhos e valores da Bellucci d'Oro.",
+        content: "Visão geral de clientes, trabalhos e valores no Gestão Fácil.",
       },
     ],
   }),
@@ -71,6 +71,22 @@ function Dashboard() {
           </Link>
         }
       />
+
+      <section className="grid grid-cols-2 gap-2">
+        <Link
+          to="/diagnostico"
+          className="flex items-center gap-2 bg-ink text-ivory rounded-lg p-3.5 text-sm font-medium ring-1 ring-black/5"
+        >
+          <span className="font-mono text-gold">＋</span> Criar diagnóstico
+        </Link>
+        <Link
+          to="/clientes"
+          search={{ novo: true }}
+          className="flex items-center gap-2 bg-card ring-1 ring-black/5 rounded-lg p-3.5 text-sm font-medium"
+        >
+          <span className="font-mono text-gold">＋</span> Guardar cliente
+        </Link>
+      </section>
 
       <section className="grid grid-cols-2 gap-3">
         <Metric label="Clientes" value={String(clients.length)} />

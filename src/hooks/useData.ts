@@ -218,6 +218,42 @@ export function useLogActivity() {
   });
 }
 
+export function useCreateDocument() {
+  const { uid } = useUid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: {
+      kind: string;
+      client_id?: string | null;
+      job_id?: string | null;
+      title?: string | null;
+      service?: string | null;
+      description?: string | null;
+      diagnosis?: string | null;
+      items?: { description: string; amount: number }[];
+      base_price?: number;
+      fees?: number;
+      discount?: number;
+      other_costs?: number;
+      total?: number;
+      notes?: string | null;
+    }) => {
+      if (!uid) throw new Error("Sessão expirada");
+      const { data, error } = await supabase
+        .from("documents")
+        .insert({ user_id: uid, ...input })
+        .select("*")
+        .single();
+      if (error) throw error;
+      return data as unknown as DocumentRow;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["documents"] });
+      qc.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
+}
+
 export function useUid_() {
   return useUid();
 }

@@ -1,30 +1,31 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { Home, Users, Briefcase, FileText, Building2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useCompany } from "@/hooks/useData";
 import { initials } from "@/lib/bdo";
 
 const NAV = [
-  { to: "/", label: "Início" },
-  { to: "/clientes", label: "Clientes" },
-  { to: "/trabalhos", label: "Trabalhos" },
-  { to: "/documentos", label: "Documentos" },
-  { to: "/empresa", label: "Empresa" },
+  { to: "/", label: "Início", icon: Home },
+  { to: "/clientes", label: "Clientes", icon: Users },
+  { to: "/trabalhos", label: "Trabalhos", icon: Briefcase },
+  { to: "/documentos", label: "Documentos", icon: FileText },
+  { to: "/empresa", label: "Empresa", icon: Building2 },
 ] as const;
 
 export function Brand({ size = "sm" }: { size?: "sm" | "lg" }) {
   return (
     <div className="flex items-center gap-2.5 min-w-0">
-      <span className="grid place-items-center size-8 rounded-md bg-ink ring-1 ring-black/5 shrink-0">
-        <span className="font-display text-gold-2 text-sm leading-none">B</span>
+      <span className="grid place-items-center size-8 rounded-md bg-ink ring-1 ring-black/5 shrink-0 overflow-hidden">
+        <img src="/logo.png" alt="Gestão Fácil" className="size-full object-cover" />
       </span>
       <span
         className={`font-display font-bold tracking-tight truncate ${
           size === "lg" ? "text-xl" : "text-[15px]"
         }`}
       >
-        Bellucci d&rsquo;Oro
+        Gestão Fácil
       </span>
     </div>
   );
@@ -65,7 +66,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   if (!user) return <SignedOut />;
 
   return (
-    <div className="min-h-screen bg-ivory text-ink">
+    <div className="min-h-screen bg-ivory text-ink pb-16">
       <header className="sticky top-0 z-30 bg-ivory/95 backdrop-blur-sm border-b border-line no-print">
         <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
           <Link to="/">
@@ -82,25 +83,33 @@ export function AppShell({ children }: { children: ReactNode }) {
               Sair
             </button>
             <span className="grid place-items-center size-8 rounded-full bg-gold text-ivory text-[11px] font-semibold font-mono ring-1 ring-black/5">
-              {initials(company?.owner_name || user.email || "BD")}
+              {initials(company?.owner_name || user.email || "GF")}
             </span>
           </div>
         </div>
-        <nav className="max-w-6xl mx-auto px-4 flex items-center gap-5 overflow-x-auto whitespace-nowrap">
-          {NAV.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              activeOptions={{ exact: item.to === "/" }}
-              className="py-3 text-sm text-ink-3 border-b-2 border-transparent"
-              activeProps={{ className: "py-3 text-sm font-medium text-ink border-b-2 border-gold" }}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
       </header>
       <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">{children}</main>
+      <nav className="fixed bottom-0 inset-x-0 z-30 bg-ivory/95 backdrop-blur-sm border-t border-line no-print pb-[env(safe-area-inset-bottom,0px)]">
+        <div className="max-w-6xl mx-auto grid grid-cols-5">
+          {NAV.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                activeOptions={{ exact: item.to === "/" }}
+                className="flex flex-col items-center justify-center gap-0.5 py-2 text-ink-3"
+                activeProps={{ className: "flex flex-col items-center justify-center gap-0.5 py-2 text-gold" }}
+              >
+                <Icon className="size-5" strokeWidth={2} />
+                <span className="text-[10px] font-medium leading-none truncate max-w-full px-0.5">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
