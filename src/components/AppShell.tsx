@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Home, Users, Briefcase, FileText, Building2 } from "lucide-react";
+import { Home, Users, Briefcase, Table2, MoreHorizontal } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useCompany } from "@/hooks/useData";
@@ -10,8 +10,8 @@ const NAV = [
   { to: "/", label: "Início", icon: Home },
   { to: "/clientes", label: "Clientes", icon: Users },
   { to: "/trabalhos", label: "Trabalhos", icon: Briefcase },
-  { to: "/documentos", label: "Documentos", icon: FileText },
-  { to: "/empresa", label: "Empresa", icon: Building2 },
+  { to: "/tabelas", label: "Tabelas", icon: Table2 },
+  { to: "/mais", label: "Mais", icon: MoreHorizontal },
 ] as const;
 
 export function Brand({ size = "sm" }: { size?: "sm" | "lg" }) {
@@ -99,7 +99,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 to={item.to}
                 activeOptions={{ exact: item.to === "/" }}
                 className="flex flex-col items-center justify-center gap-0.5 py-2 text-ink-3"
-                activeProps={{ className: "flex flex-col items-center justify-center gap-0.5 py-2 text-gold" }}
+                activeProps={{
+                  className: "flex flex-col items-center justify-center gap-0.5 py-2 text-gold",
+                }}
               >
                 <Icon className="size-5" strokeWidth={2} />
                 <span className="text-[10px] font-medium leading-none truncate max-w-full px-0.5">
@@ -145,7 +147,13 @@ export function Empty({ title, hint }: { title: string; hint?: string }) {
   );
 }
 
-export function Chip({ label, tone = "muted" }: { label: string; tone?: "gold" | "ink" | "muted" }) {
+export function Chip({
+  label,
+  tone = "muted",
+}: {
+  label: string;
+  tone?: "gold" | "ink" | "muted";
+}) {
   const tones = {
     gold: "text-gold bg-gold/10 ring-gold/20",
     ink: "text-ink-2 bg-ink-2/10 ring-ink-2/20",

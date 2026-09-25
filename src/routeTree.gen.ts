@@ -17,6 +17,7 @@ import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as EmpresaRouteImport } from './routes/empresa'
 import { Route as FinancasRouteImport } from './routes/financas'
+import { Route as MaisRouteImport } from './routes/mais'
 import { Route as TabelasRouteImport } from './routes/tabelas'
 import { Route as TrabalhosRouteImport } from './routes/trabalhos'
 import { Route as DocumentosIdRouteImport } from './routes/documentos.$id'
@@ -62,6 +63,11 @@ const FinancasRoute = FinancasRouteImport.update({
   path: '/financas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MaisRoute = MaisRouteImport.update({
+  id: '/mais',
+  path: '/mais',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabelasRoute = TabelasRouteImport.update({
   id: '/tabelas',
   path: '/tabelas',
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/documentos': typeof DocumentosRouteWithChildren
   '/empresa': typeof EmpresaRoute
   '/financas': typeof FinancasRoute
+  '/mais': typeof MaisRoute
   '/tabelas': typeof TabelasRouteWithChildren
   '/trabalhos': typeof TrabalhosRoute
   '/documentos/$id': typeof DocumentosIdRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/documentos': typeof DocumentosRouteWithChildren
   '/empresa': typeof EmpresaRoute
   '/financas': typeof FinancasRoute
+  '/mais': typeof MaisRoute
   '/tabelas': typeof TabelasRouteWithChildren
   '/trabalhos': typeof TrabalhosRoute
   '/documentos/$id': typeof DocumentosIdRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/documentos': typeof DocumentosRouteWithChildren
   '/empresa': typeof EmpresaRoute
   '/financas': typeof FinancasRoute
+  '/mais': typeof MaisRoute
   '/tabelas': typeof TabelasRouteWithChildren
   '/trabalhos': typeof TrabalhosRoute
   '/documentos/$id': typeof DocumentosIdRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/documentos'
     | '/empresa'
     | '/financas'
+    | '/mais'
     | '/tabelas'
     | '/trabalhos'
     | '/documentos/$id'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/documentos'
     | '/empresa'
     | '/financas'
+    | '/mais'
     | '/tabelas'
     | '/trabalhos'
     | '/documentos/$id'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/documentos'
     | '/empresa'
     | '/financas'
+    | '/mais'
     | '/tabelas'
     | '/trabalhos'
     | '/documentos/$id'
@@ -180,6 +192,7 @@ export interface RootRouteChildren {
   DocumentosRoute: typeof DocumentosRouteWithChildren
   EmpresaRoute: typeof EmpresaRoute
   FinancasRoute: typeof FinancasRoute
+  MaisRoute: typeof MaisRoute
   TabelasRoute: typeof TabelasRouteWithChildren
   TrabalhosRoute: typeof TrabalhosRoute
 }
@@ -240,6 +253,13 @@ declare module '@tanstack/react-router' {
       path: '/financas'
       fullPath: '/financas'
       preLoaderRoute: typeof FinancasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mais': {
+      id: '/mais'
+      path: '/mais'
+      fullPath: '/mais'
+      preLoaderRoute: typeof MaisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tabelas': {
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   DocumentosRoute: DocumentosRouteWithChildren,
   EmpresaRoute: EmpresaRoute,
   FinancasRoute: FinancasRoute,
+  MaisRoute: MaisRoute,
   TabelasRoute: TabelasRouteWithChildren,
   TrabalhosRoute: TrabalhosRoute,
 }
